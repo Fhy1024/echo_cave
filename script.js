@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // 从JSON文件中获取句子
     async function fetchQuotes() {
         try {
-            const response = await fetch('encrypted-quotes.json');
+            const response = await fetch('/encrypted-quotes.json');
             const encryptedQuotes = await response.json();
             
             // 随机选择一个加密的句子
