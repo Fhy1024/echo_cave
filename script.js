@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const generateBtn = document.getElementById('generate-btn');
     const linkBtn = document.getElementById('link-btn');
     const quoteElement = document.getElementById('quote');
@@ -12,16 +12,22 @@ document.addEventListener('DOMContentLoaded', function() {
     // 密钥
     const secretKey = 'fhy2025';
 
+    // 检查 DOM 元素是否存在
+    if (!generateBtn || !linkBtn || !quoteElement || !currentTimeElement || !countdownElement) {
+        console.error('必要的DOM元素找不着啦，快看看HTML结构叭~');
+        return;
+    }
+
     // 页面加载时自动抽取一句话
     fetchQuotes();
 
     // 点击按钮时生成随机句子
-    generateBtn.addEventListener('click', function() {
+    generateBtn.addEventListener('click', function () {
         fetchQuotes();
     });
 
     // 点击链接按钮时打开新标签页
-    linkBtn.addEventListener('click', function() {
+    linkBtn.addEventListener('click', function () {
         // 替换为你的目标网页URL
         window.open('https://www.wenjuan.com/s/UZBZJvJ0BR/', '_blank');
     });
@@ -42,21 +48,24 @@ document.addEventListener('DOMContentLoaded', function() {
     // 从JSON文件中获取句子
     async function fetchQuotes() {
         try {
-            const response = await fetch('/encrypted-quotes.json');
+            const response = await fetch('./encrypted-quotes.json'); // 修正路径为相对路径
+            if (!response.ok) {
+                throw new Error(`HTTP 错误哦~状态码: ${response.status}`);
+            }
             const encryptedQuotes = await response.json();
-            
+
             // 随机选择一个加密的句子
             const randomEncryptedQuote = getRandomEncryptedQuote(encryptedQuotes);
-            
+
             // 解密句子
             const decryptedQuote = decryptData(randomEncryptedQuote, secretKey);
-            
+
             // 清除当前内容并停止之前的动画
             quoteElement.textContent = '';
             if (typingInterval) {
                 clearInterval(typingInterval);
             }
-            
+
             // 开始新的打字动画
             typeWriter(decryptedQuote);
 
@@ -78,7 +87,11 @@ document.addEventListener('DOMContentLoaded', function() {
     function decryptData(encryptedData, key) {
         try {
             const bytes = CryptoJS.AES.decrypt(encryptedData, key);
-            return bytes.toString(CryptoJS.enc.Utf8);
+            const decryptedText = bytes.toString(CryptoJS.enc.Utf8);
+            if (!decryptedText) {
+                throw new Error('解密结果怎么是空的?一定是出现了bug！');
+            }
+            return decryptedText;
         } catch (error) {
             console.error('TwT解密失败:', error);
             return '一不小心加载失败了，快看看密钥对不对吧！';
@@ -87,6 +100,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 打字效果动画
     function typeWriter(text) {
+        clearInterval(typingInterval); // 确保清除之前的动画
         let i = 0;
         const speed = 50; // 打字速度（毫秒）
         typingInterval = setInterval(() => {
@@ -103,7 +117,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function startCountdown() {
         countdownValue = 15;
         countdownElement.textContent = `${countdownValue}`;
-        
+
         countdownInterval = setInterval(() => {
             countdownValue--;
             if (countdownValue <= 0) {
@@ -118,7 +132,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 重置倒计时
     function resetCountdown() {
-        clearInterval(countdownInterval);
+        clearInterval(countdownInterval); // 确保清除之前的倒计时
         startCountdown();
     }
 
