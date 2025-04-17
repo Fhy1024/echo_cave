@@ -7,6 +7,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     let countdownInterval;
     let countdownValue = 15;
+    let typingInterval; // 用于存储打字动画的 interval
+
+    // 密钥
+    const secretKey = 'fhy2025';
 
     // 页面加载时自动抽取一句话
     fetchQuotes();
@@ -38,13 +42,23 @@ document.addEventListener('DOMContentLoaded', function() {
     // 从JSON文件中获取句子
     async function fetchQuotes() {
         try {
-            const response = await fetch('quotes.json');
-            const quotes = await response.json();
-            const randomQuote = getRandomQuote(quotes);
+            const response = await fetch('encrypted-quotes.json');
+            const encryptedQuotes = await response.json();
             
-            // 清除当前内容并开始打字动画
+            // 随机选择一个加密的句子
+            const randomEncryptedQuote = getRandomEncryptedQuote(encryptedQuotes);
+            
+            // 解密句子
+            const decryptedQuote = decryptData(randomEncryptedQuote, secretKey);
+            
+            // 清除当前内容并停止之前的动画
             quoteElement.textContent = '';
-            typeWriter(randomQuote);
+            if (typingInterval) {
+                clearInterval(typingInterval);
+            }
+            
+            // 开始新的打字动画
+            typeWriter(decryptedQuote);
 
             // 重置倒计时
             resetCountdown();
@@ -54,22 +68,33 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // 从数组中随机选择一个句子
-    function getRandomQuote(quotes) {
-        const randomIndex = Math.floor(Math.random() * quotes.length);
-        return quotes[randomIndex];
+    // 从数组中随机选择一个加密的句子
+    function getRandomEncryptedQuote(encryptedQuotes) {
+        const randomIndex = Math.floor(Math.random() * encryptedQuotes.length);
+        return encryptedQuotes[randomIndex];
+    }
+
+    // 解密函数
+    function decryptData(encryptedData, key) {
+        try {
+            const bytes = CryptoJS.AES.decrypt(encryptedData, key);
+            return bytes.toString(CryptoJS.enc.Utf8);
+        } catch (error) {
+            console.error('TwT解密失败:', error);
+            return '一不小心加载失败了，快看看密钥对不对吧！';
+        }
     }
 
     // 打字效果动画
     function typeWriter(text) {
         let i = 0;
         const speed = 50; // 打字速度（毫秒）
-        const interval = setInterval(() => {
+        typingInterval = setInterval(() => {
             if (i < text.length) {
                 quoteElement.textContent += text.charAt(i);
                 i++;
             } else {
-                clearInterval(interval);
+                clearInterval(typingInterval);
             }
         }, speed);
     }
