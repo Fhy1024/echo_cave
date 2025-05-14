@@ -1,19 +1,25 @@
 document.addEventListener('DOMContentLoaded', function () {
     const generateBtn = document.getElementById('generate-btn');
     const linkBtn = document.getElementById('link-btn');
+    const settingsBtn = document.getElementById('settings-btn');
     const quoteElement = document.getElementById('quote');
     const currentTimeElement = document.getElementById('current-time');
     const countdownElement = document.getElementById('countdown');
+    const settingsModal = document.getElementById('settings-modal');
+    const closeModal = document.querySelector('.close');
+    const settingsKeyInput = document.getElementById('settings-key');
+    const jumpBtn1 = document.getElementById('jump-btn1');
+    const jumpBtn2 = document.getElementById('jump-btn2');
 
     let countdownInterval;
     let countdownValue = 15;
     let typingInterval; // 用于存储打字动画的 interval
 
     // 密钥
-    const secretKey = 'fhy2025';
+    let secretKey = 'fhy2025';
 
     // 检查 DOM 元素是否存在
-    if (!generateBtn || !linkBtn || !quoteElement || !currentTimeElement || !countdownElement) {
+    if (!generateBtn || !linkBtn || !settingsBtn || !quoteElement || !currentTimeElement || !countdownElement) {
         console.error('必要的DOM元素找不着啦，快看看HTML结构叭~');
         return;
     }
@@ -28,8 +34,39 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // 点击链接按钮时打开新标签页
     linkBtn.addEventListener('click', function () {
-        // 替换为你的目标网页URL
         window.open('https://www.wenjuan.com/s/UZBZJvJ0BR/', '_blank');
+    });
+
+    // 点击设置按钮时显示设置窗口
+    settingsBtn.addEventListener('click', function () {
+        settingsModal.style.display = 'block';
+    });
+
+    // 点击关闭按钮时关闭设置窗口
+    closeModal.addEventListener('click', function () {
+        settingsModal.style.display = 'none';
+    });
+
+    // 点击窗口外部时关闭设置窗口
+    window.addEventListener('click', function (event) {
+        if (event.target === settingsModal) {
+            settingsModal.style.display = 'none';
+        }
+    });
+
+    // 设置窗口中的密钥更新
+    settingsKeyInput.addEventListener('input', function () {
+        secretKey = this.value;
+    });
+
+    // 跳转按钮1
+    jumpBtn1.addEventListener('click', function () {
+        window.open('https://github.com/Fhy1024/echo_cave', '_blank');
+    });
+
+    // 跳转按钮2
+    jumpBtn2.addEventListener('click', function () {
+        window.open('https://fhy1234.dpdns.org/', '_blank');
     });
 
     // 实时时间显示

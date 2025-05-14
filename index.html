@@ -27,6 +27,24 @@
     <div class="music-container">
         <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=2599868807&auto=1&height=66"></iframe>
     </div>
+    <!-- 设置按钮 -->
+    <button id="settings-btn" class="settings-btn">⚙️</button>
+    <!-- 设置窗口 -->
+    <div id="settings-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>网页说明</h3>
+            <p>这是一个用来纪念高中时光的静态网页，点击按钮或倒计时结束时会随机展示一段文字。本网页使用AI制作，可能质量并不高。</p>
+            <p>如果有建议或问题请发邮件到 imfhy1234@outlook.com 来反馈</p>
+            <h3>文字解密密钥设置</h3>
+            <p>需要解密密钥才可以正常显示文字哦~</p>
+            <input type="text" id="settings-key" placeholder="在这里输入解密密钥" value="fhy2025">
+            <div class="jump-buttons">
+                <button id="jump-btn1">在GitHub上查看</button>
+                <button id="jump-btn2">访问Fhy的博客</button>
+            </div>
+        </div>
+    </div>
     <script src="script.js"></script>
 </body>
 </html>
