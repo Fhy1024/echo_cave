@@ -11,6 +11,7 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
@@ -83,7 +84,7 @@ h2 {
 
 #generate-btn, #link-btn {
     background-color: #6fd8d3;
-    color: white;
+    color: rgb(121, 121, 121);
     border: none;
     padding: 12px 24px;
     font-size: 16px;
@@ -99,6 +100,19 @@ h2 {
 #countdown {
     font-size: 14px;
     color: #ff7676;
+}
+
+/* 彩色闪动效果 */
+@keyframes colorPulse {
+    0% { background-color: #87CEEB; } /* 天蓝色 */
+    25% { background-color: #90EE90; } /* 浅绿色 */
+    50% { background-color: #D8BFD8; } /* 浅紫色 */
+    75% { background-color: #FFB6C1; } /* 浅粉色 */
+    100% { background-color: #87CEEB; } /* 天蓝色 */
+}
+
+.color-pulse {
+    animation: colorPulse 4s infinite;
 }
 
 /* 设置按钮样式 */
@@ -123,7 +137,7 @@ h2 {
 
 /* 设置窗口样式 */
 .modal {
-    display: none;
+    display: none; /* 默认隐藏设置窗口 */
     position: fixed;
     z-index: 1;
     left: 0;
@@ -174,4 +188,41 @@ h2 {
 
 #jump-btn1:hover, #jump-btn2:hover {
     background-color: #7cebe6;
+}
+
+/* 版权及备案信息样式 */
+.footer {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    text-align: right;
+}
+
+.copyright {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.3); /* 初始透明度为30% */
+    transition: color 0.3s ease;
+}
+
+.copyright:hover {
+    color: rgba(255, 255, 255, 1); /* 鼠标悬停时透明度为100% */
+}
+
+/* 备案号链接样式 */
+.beian {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.3); /* 初始透明度为30% */
+    transition: color 0.3s ease;
+    text-decoration: none; /* 去掉下划线 */
+}
+
+.beian:hover {
+    color: rgba(255, 255, 255, 1); /* 鼠标悬停时透明度为100% */
+}
+
+/* 句子数量显示样式 */
+#quote-count {
+    font-size: 14px;
+    color: #767676;
+    margin-left: 5px;
 }

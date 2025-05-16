@@ -14,9 +14,9 @@
     </div>
     <div class="container">
         <h1>回声洞</h1>
-        <h2>我们毕业啦！</h2>
+        <h2>我们毕业啦！<span id="quote-count"></span></h2>
         <div class="quote-container">
-            <p id="quote">毕业啦！</p>
+            <p id="quote">文字</p>
         </div>
         <div class="controls">
             <button id="generate-btn">再来一个</button>
@@ -27,7 +27,6 @@
     <div class="music-container">
         <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=2599868807&auto=1&height=66"></iframe>
     </div>
-    <!-- 设置按钮 -->
     <button id="settings-btn" class="settings-btn">⚙️</button>
     <!-- 设置窗口 -->
     <div id="settings-modal" class="modal">
@@ -39,11 +38,20 @@
             <h3>文字解密密钥设置</h3>
             <p>需要解密密钥才可以正常显示文字哦~</p>
             <input type="text" id="settings-key" placeholder="在这里输入解密密钥" value="fhy2025">
+            <h3>投稿按钮突出显示</h3>
+            <input type="checkbox" id="color-toggle" checked>
+            <label for="color-toggle">启用彩色闪动效果</label>
             <div class="jump-buttons">
                 <button id="jump-btn1">在GitHub上查看</button>
                 <button id="jump-btn2">访问Fhy的博客</button>
             </div>
         </div>
+    </div>
+    <!-- 版权及备案信息 -->
+    <div class="footer">
+        <p class="copyright">© Fhy2025 班级回声洞</p>
+        <a href="https://icp.gov.moe/?keyword=20259981" target="_blank" class="beian">萌ICP备20259981号</a>
+        <p class="copyright">version 1.2.1 2025-5-17</p>
     </div>
     <script src="script.js"></script>
 </body>

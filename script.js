@@ -10,6 +10,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const settingsKeyInput = document.getElementById('settings-key');
     const jumpBtn1 = document.getElementById('jump-btn1');
     const jumpBtn2 = document.getElementById('jump-btn2');
+    const colorToggle = document.getElementById('color-toggle');
+    const quoteCountElement = document.getElementById('quote-count');
 
     let countdownInterval;
     let countdownValue = 15;
@@ -59,6 +61,15 @@ document.addEventListener('DOMContentLoaded', function () {
         secretKey = this.value;
     });
 
+    // 彩色闪动效果开关
+    colorToggle.addEventListener('change', function () {
+        if (this.checked) {
+            linkBtn.classList.add('color-pulse');
+        } else {
+            linkBtn.classList.remove('color-pulse');
+        }
+    });
+
     // 跳转按钮1
     jumpBtn1.addEventListener('click', function () {
         window.open('https://github.com/Fhy1024/echo_cave', '_blank');
@@ -82,7 +93,7 @@ document.addEventListener('DOMContentLoaded', function () {
     setInterval(updateTime, 1000);
     updateTime(); // 初始化时间显示
 
-    // 从JSON文件中获取句子
+     // 从JSON文件中获取句子
     async function fetchQuotes() {
         try {
             const response = await fetch('./encrypted-quotes.json'); // 修正路径为相对路径
@@ -90,6 +101,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 throw new Error(`HTTP 错误哦~状态码: ${response.status}`);
             }
             const encryptedQuotes = await response.json();
+
+            // 更新句子数量显示
+            quoteCountElement.textContent = `（已收集 ${encryptedQuotes.length} 声）`;
 
             // 随机选择一个加密的句子
             const randomEncryptedQuote = getRandomEncryptedQuote(encryptedQuotes);
@@ -175,4 +189,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // 启动倒计时
     startCountdown();
+
+    // 初始化彩色闪动效果
+    if (colorToggle.checked) {
+        linkBtn.classList.add('color-pulse');
+    }
 });
