@@ -12,6 +12,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const jumpBtn2 = document.getElementById('jump-btn2');
     const colorToggle = document.getElementById('color-toggle');
     const quoteCountElement = document.getElementById('quote-count');
+    const confirmModal = document.getElementById('confirm-modal');
+    const confirmClose = document.querySelector('.close-confirm');
+    const confirmYesBtn = document.getElementById('confirm-yes');
+    const confirmNoBtn = document.getElementById('confirm-no');
 
     let countdownInterval;
     let countdownValue = 15;
@@ -34,9 +38,25 @@ document.addEventListener('DOMContentLoaded', function () {
         fetchQuotes();
     });
 
-    // 点击链接按钮时打开新标签页
+    // 点击链接按钮时弹出确认对话框
     linkBtn.addEventListener('click', function () {
+        confirmModal.style.display = 'block';
+    });
+
+    // 点击确认对话框的“是”按钮时打开新标签页
+    confirmYesBtn.addEventListener('click', function () {
         window.open('https://www.wenjuan.com/s/UZBZJvJ0BR/', '_blank');
+        confirmModal.style.display = 'none';
+    });
+
+    // 点击确认对话框的“否”按钮时关闭对话框
+    confirmNoBtn.addEventListener('click', function () {
+        confirmModal.style.display = 'none';
+    });
+
+    // 点击确认对话框的关闭按钮时关闭对话框
+    confirmClose.addEventListener('click', function () {
+        confirmModal.style.display = 'none';
     });
 
     // 点击设置按钮时显示设置窗口
@@ -53,6 +73,9 @@ document.addEventListener('DOMContentLoaded', function () {
     window.addEventListener('click', function (event) {
         if (event.target === settingsModal) {
             settingsModal.style.display = 'none';
+        }
+        if (event.target === confirmModal) {
+            confirmModal.style.display = 'none';
         }
     });
 
@@ -93,7 +116,7 @@ document.addEventListener('DOMContentLoaded', function () {
     setInterval(updateTime, 1000);
     updateTime(); // 初始化时间显示
 
-     // 从JSON文件中获取句子
+    // 从JSON文件中获取句子
     async function fetchQuotes() {
         try {
             const response = await fetch('./encrypted-quotes.json'); // 修正路径为相对路径
