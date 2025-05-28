@@ -1,3 +1,4 @@
+//v1.2.2
 document.addEventListener('DOMContentLoaded', function () {
     const generateBtn = document.getElementById('generate-btn');
     const linkBtn = document.getElementById('link-btn');
